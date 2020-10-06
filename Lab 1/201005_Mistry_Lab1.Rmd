@@ -50,24 +50,41 @@ top_ten_deadest
 ```{r, fig.width = 5, fig.height = 5}
 top_ten_deadest %>%
   group_by(sex) %>%
-  mutate(name = reorder(x = name, X = desc(percent_dead))) %>%
-  ggplot(aes(x = name, y = percent_dead)) +
-  geom_bar(aes(fill = sex), stat = "identity") +
-  geom_text(x = top_ten_deadest$name, y = top_ten_deadest$percent_dead + 6, label = sprintf("%0.1f %%", top_ten_deadest$percent_dead), size = 3) +
+  mutate(name = reorder(x = name,
+                        X = desc(percent_dead))) %>%
+  ggplot(aes(x = name,
+             y = percent_dead)) +
+  geom_bar(aes(fill = sex),
+           stat = "identity") +
+  geom_text(
+    x = top_ten_deadest$name,
+    y = top_ten_deadest$percent_dead + 6,
+    label = sprintf("%0.1f %%",
+                    top_ten_deadest$percent_dead),
+    size = 3) +
   coord_flip() +
   scale_x_discrete(limits = rev(top_ten_deadest$name)) +
   scale_fill_manual(values = c("#e1ad01", "#1C86EE")) +
-  ggtitle("Deadest Names", subtitle = "Estimated percentage of Americans with a given name born\n\t\t  since 1900 who were dead as of Jan. 1, 2014               ") +
-  ylim(0,100)+
-  theme(plot.title = element_text(hjust = -0.18),
-        plot.subtitle = element_text(hjust = -2.3),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.title.y = element_blank(),
-        panel.grid = element_blank(),
-        plot.background = element_rect(fill = "gray92"),
-        legend.position = "none")
+  ggtitle(
+    "Deadest Names",
+    subtitle = paste(
+      "Estimated percentage of Americans with a given name",
+      "born\n\t\t\t\t\t\t\t\t  since 1900 who were",
+      "dead as of Jan 1, 2014"
+    )
+  ) +
+  ylim(0, 100) +
+  theme(
+    plot.title = element_text(hjust = -0.18),
+    plot.subtitle = element_text(hjust = -2.2),
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.title.y = element_blank(),
+    panel.grid = element_blank(),
+    plot.background = element_rect(fill = "gray92"),
+    legend.position = "none"
+  )
 ```
 
