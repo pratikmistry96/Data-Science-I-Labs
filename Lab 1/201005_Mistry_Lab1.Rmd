@@ -141,3 +141,4 @@ deadest_plot <- deadest_plot +
 deadest_plot
 ```
 
+**Figure 1:** This graph displays the top ten deadest and most frequent (n > 100,000) names from a baby names distribution of baby names from 1900 to Jan 1, 2014. The graph is different from the FiveThirtyEight graph in the assignment, but that may be due to a different threshold used to determine the most frequent names (ours was 100,000). According to our threshold, Gertrude is the most deadest name for women and Elmer is the most deadest name for men.
