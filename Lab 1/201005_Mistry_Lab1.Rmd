@@ -131,7 +131,7 @@ deadest_plot <- deadest_plot +
     axis.title.y = element_blank(), ## Remove title for y-axis
     panel.grid = element_blank(), ## Remove grid from plot
     plot.background = element_rect(fill = "gray92"), ## Match background color to plot
-    legend.position = "none" ## Remove the legened
+    legend.position = "none" ## Remove the legend
   )
 ```
 
