@@ -1,7 +1,7 @@
 ---
-title: "Lab 1"
+title: "Data Science: Lab 1"
 author: "Pratik Mistry"
-date: "9/30/2020"
+date: "10/07/2020"
 output: html_document
 ---
 
@@ -9,11 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+**Repository Link:** https://github.com/pratikmistry96/Data-Science-I-Labs/tree/master/Lab%201
+
+# Goal:
+The goal of this assignment was to recreate a plot similar to a plot from FiveThirtyEight
+
+
 
 # Load Libraries
 ```{r, message = FALSE}
-remove(list = ls())
+remove(list = ls()) ## Remove any variables in environment
 
+## Load all necessary libraries
 library(dplyr)
 library(ggplot2)
 library(mdsr)
@@ -24,22 +31,25 @@ library(babynames)
 # 1) Wrangle Data
 
 ```{r}
-babynames <- make_babynames_dist()
-babynames
+babynames <- make_babynames_dist() ## Create a distribution of babynames
+names(babynames) ## Display all variable/column names in the distribution
 ```
 
 
 
 ```{r}
+## The following code extracts the top 10 most dead names of the most
+## frequent names from both sexes
+
 top_ten_deadest <- babynames %>%
-  group_by(sex, name) %>%
-  summarise(total_persons = sum(n),
-            total_alive = sum(est_alive_today))%>%
-  mutate(percent_dead = 100 * (1 - (total_alive/total_persons))) %>%
-  group_by(sex) %>%
-  filter(total_persons > 100000) %>%
-  slice_max(order_by = percent_dead, n = 10) %>%
-  arrange(desc(percent_dead))
+  group_by(sex, name) %>% ## Group baby names by sex and name
+  summarise(total_persons = sum(n), ## Calculate total person by name and sex
+            total_alive = sum(est_alive_today)) %>% ## Calculate total persons alive today by name and sex
+  mutate(percent_dead = 100 * (1 - (total_alive / total_persons))) %>% ## Calculate the percent people dead
+  group_by(sex) %>% ## Group data by sex
+  filter(total_persons > 100000) %>% ## Filter data with total persons greater than 100000 for each sex
+  slice_max(order_by = percent_dead, n = 10) %>% ## Pull the top 10 "deadest" for each sex
+  arrange(desc(percent_dead)) ## Arrange by descending percent dead
 
 top_ten_deadest
 ```
@@ -47,44 +57,87 @@ top_ten_deadest
 # 2) Plot data
 
 
-```{r, fig.width = 5, fig.height = 5}
-top_ten_deadest %>%
-  group_by(sex) %>%
+```{r, fig.height = 5, fig.width = 5}
+## The following code takes the top_ten_deadest data frame and creates a bar plot
+deadest_plot <- top_ten_deadest %>%
+  group_by(sex) %>% ## Group the values by sex
   mutate(name = reorder(x = name,
-                        X = desc(percent_dead))) %>%
-  ggplot(aes(x = name,
+                        X = desc(percent_dead))) %>% ## Reorder the names by percent dead
+  ggplot(aes(x = name, ## Set plot aesthetics using name as x-axis and percent dead for y axis
              y = percent_dead)) +
-  geom_bar(aes(fill = sex),
-           stat = "identity") +
-  geom_text(
+  geom_bar(aes(fill = sex), ## Create a bar graph and color by sex
+           stat = "identity", ## Set the plot to identity to ensure it's not stacked
+           width = 0.85) ## Adjust the width of the bar to increase spacing
+```
+
+
+```{r}
+## Create a name vector with an empty string in middle to create break in graph
+name <- top_ten_deadest$name ## Store names in a new variable
+name[12:21] <- name[11:20] ## Move values from 11 - 20 to 12 to 21
+name[11] <- " " ## Put an empty string in 11
+```
+
+
+```{r, fig.height = 5, fig.width = 5}
+## Add text to the plot
+deadest_plot <- deadest_plot +
+  ## Add percent dead text to end of bar chart
+  geom_text( 
+    ## Set x-axis location of the text will be the name
     x = top_ten_deadest$name,
+    ## The y-axis location of the text will be the percent dead with a buffer of 6
     y = top_ten_deadest$percent_dead + 6,
-    label = sprintf("%0.1f %%",
+    ## Use sprintf to create the label and add the number as text
+    label = sprintf("%0.1f %%", 
                     top_ten_deadest$percent_dead),
-    size = 3) +
-  coord_flip() +
-  scale_x_discrete(limits = rev(top_ten_deadest$name)) +
-  scale_fill_manual(values = c("#e1ad01", "#1C86EE")) +
-  ggtitle(
-    "Deadest Names",
-    subtitle = paste(
-      "Estimated percentage of Americans with a given name",
-      "born\n\t\t\t\t\t\t\t\t  since 1900 who were",
-      "dead as of Jan 1, 2014"
-    )
+    ## Set the size of the text
+    size = 3
   ) +
-  ylim(0, 100) +
+  ## Add the title and subtitle
+  ggtitle("Deadest Names",
+          subtitle = "Estimated percentage of Americans with a given name born\nsince 1900 who were dead as of Jan 1, 2014")
+```
+
+
+```{r, fig.height = 5, fig.width = 5}
+## Adjust the axes and change the color
+deadest_plot <- deadest_plot +
+  ## Flip the coordinates
+  coord_flip() +
+  ## Reverse the order of the x limits, so female names are on top
+  ## Also use the newly created name variable so there is a break in the graph
+  scale_x_discrete(limits = rev(name)) +
+  ## Change the fill of the bars to match the colors from the graph
+  scale_fill_manual(values = c("#e1ad01", "#1C86EE")) +
+  ## Set y limits to be from 0 100
+  ylim(0, 100)
+```
+
+
+```{r, fig.height = 5, fig.width = 5}
+## Change the theme of the plots
+deadest_plot <- deadest_plot +
   theme(
-    plot.title = element_text(hjust = -0.18),
-    plot.subtitle = element_text(hjust = -2.2),
-    axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.y = element_blank(),
-    axis.title.y = element_blank(),
-    panel.grid = element_blank(),
-    plot.background = element_rect(fill = "gray92"),
-    legend.position = "none"
+    plot.title = element_text(hjust = 0, ## Left align title
+                              face = "bold"), ## Make title bold
+    plot.title.position = "plot", ## Adjust so the title is not restricted
+    plot.subtitle = element_text(hjust = 0), ## Left align subtitle
+    axis.title.x = element_blank(), ## Remove title for x-axis
+    axis.text.x = element_blank(), ## Remove text for x-axis
+    axis.text.y.left = element_text(margin = margin(0,-10,0,0,"pt")), ## Push test closer to bar
+    axis.ticks.x = element_blank(), ## Remove ticks for x-axis
+    axis.ticks.y = element_blank(), ## Remove ticks for y-axis
+    axis.title.y = element_blank(), ## Remove title for y-axis
+    panel.grid = element_blank(), ## Remove grid from plot
+    plot.background = element_rect(fill = "gray92"), ## Match background color to plot
+    legend.position = "none" ## Remove the legened
   )
+```
+
+
+```{r, fig.width = 5, fig.height = 6}
+## Display the plot
+deadest_plot
 ```
 
