@@ -1,0 +1,107 @@
+---
+title: "lab2"
+author: "Pratik Mistry"
+date: "10/31/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(devtools)
+options(scipen = 999)
+```
+
+```{r}
+setwd("~/Weill Cornell Medicine/Fall 2020/Data Science I/R Packages")
+getwd()
+```
+
+
+
+```{r}
+setwd("~/Weill Cornell Medicine/Fall 2020/Data Science I/R Packages")
+getwd()
+install("drgfuncs")
+library(drgfuncs)
+```
+
+
+```{r}
+?drg_plot
+```
+
+
+
+
+
+```{r}
+drg_data <- read.csv("C:/Users/pratik/Documents/Weill Cornell Medicine/Fall 2020/Data Science I/R Packages/DRG_data.csv")
+```
+
+```{r}
+drg_plot <- function(data, option) {
+  opt <- c(
+    "Average.Covered.Charges",
+    "Average.Total.Payments",
+    "Average.Medicare.Payments"
+  )
+  if (option %in% opt) {
+    plt <- data %>%
+      mutate(DRG = str_extract(DRG.Definition, "[0-9]*")) %>%
+      group_by(DRG) %>%
+      ggplot(aes_string(x = "DRG",
+                        y = option)) +
+      geom_boxplot(outlier.size = 0.1) +
+      labs(
+        title = paste0(gsub(".", " ", option, fixed = TRUE), " by DRG Code"),
+        x = "Medical Procedure (DRG)",
+        y = "Payment ($) - Log Scaled"
+      ) +
+      theme(
+        axis.text.x = element_text(size = 6,
+                                   angle = 90,
+                                   hjust = 1)
+      ) +
+      scale_y_log10()
+    return(plt)
+  } else{
+    stop("Invalid Payment Option")
+  }
+}
+drg_plot(drg_data, "Average.Covered.Charges")
+```
+
+
+```{r}
+drg_stats <- function(data, stat, option){
+  opt <- c(
+    "Average.Covered.Charges",
+    "Average.Total.Payments",
+    "Average.Medicare.Payments"
+  )
+  FUN <- get(stat)
+  colname <- paste0(stat,
+                    ".",
+                    option)
+  if(option %in% opt){
+    drg_stat <- data %>%
+      group_by(DRG.Definition) %>%
+      summarize(!!colname := FUN(get(option)))
+    return(drg_stat)
+  }else{
+    stop("Invalid Payment Option")
+  }
+}
+drg_stats(drg_data, 'median', "Average.Total.Payments")
+```
+
+
+
+
+

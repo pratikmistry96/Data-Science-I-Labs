@@ -1,0 +1,14 @@
+---
+title: "Data Science I - Lab 2"
+author: "Pratik Mistry"
+date: "11/1/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**GitHub Link:** https://github.com/pratikmistry96/drgfuncs
+
+The GitHub Repo contains the package for lab 2.

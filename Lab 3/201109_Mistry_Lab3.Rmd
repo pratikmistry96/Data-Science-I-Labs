@@ -1,0 +1,83 @@
+---
+title: "Data Science I - Lab 3"
+author: "Pratik Mistry"
+date: "11/9/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Clear Workspace Variables**
+```{r}
+rm(list = ls())
+```
+
+
+
+# Introduction:
+
+  The Monty Hall Problem: The Monty Hall problem illustrates a simple setting where intuition is often misleading. The situation is based on the TV game show ‘Let’s Make a Deal’. First Monty (the host) puts a prize behind one of three doors. Then the player chooses a door. Next, (without moving the prize) Monty opens an unselected door, revealing that the prize is not behind it. The player may then switch to the other nonselected door. Should the player switch?
+
+  Many people see that there are now two doors to choose between and feel that since Monty can always open a nonprize door, there is still equal probability for each door. If that were the case, the player might as well keep the original door. A correct intuitive route is to observe that Monty’s door is fixed. The probability that the player has the right door is 1/3 before Monty opens the non-prize door, and remains 1/3 after that door is open. This means that the probability that the prize is behind one of the doors is 2/3, both before and after Monty opens the nonprize door. After Monty opens the nonprize door, the player gets a 2/3 chance of winning by switching to the remaining door. If the player wants to win, they should switch doors.
+
+
+# Functions
+
+The following functions will be used to verify that the probability of winning the game is if the user switches doors is 2/3 and the probability of winning if the user does not switch doors is 1/3.
+
+**Function 1:** Create a function that plays one round of the Monty Hall game with a logical input that asks the user if they want to switch doors, when asked by the host.
+```{r}
+# Define a function with the name "montyhall" and input "switch"
+montyhall <- function(switch){
+  prize <- 1 # Identity the door number that contains the prize
+  choice <- sample(x = c(1, 2, 3), size = 1, replace = FALSE) # Use sample to randomly select either door 1, 2, or 3
+  # Use an if-else statement to decide which door to reveal to the contestant. The door revealed will always be 
+  # a door with no prize (2 or 3)
+  if(choice == 2){ # If the selected door is 2, then the door reveal will be 3
+    door_reveal <- 3
+  }else{ # If the selected door is 1 (the prize) or 3, then the door reveal will be 2
+    door_reveal <- 2
+  }
+  if(switch == TRUE){ # if switch is true, then the choice will go to the remaining door
+    choice <- 6 - door_reveal - choice
+  }
+  if(choice == prize){ # If the choice door is the prize then the function assigns TRUE to result 
+    result <- TRUE
+  }else{ # If the the choice door is not the prize then the function assigns FALSE to result
+    result <- FALSE
+  }
+  return(result) # Return the result of the game
+}
+```
+
+
+**Function 2:** Create a function that simulates the montyhall game with two user inputs: *repetitions* and *switch*. The *repetition* variable specifies the number of times the montyhall function will be simulated. The *switch* variable specifies whether or not the player switches doors when asked by the presenter. 
+```{r}
+# Define a function with the name "sim_montyhall" With the 
+sim_montyhall <- function(reps, switch){
+  sim_results <- replicate(reps, # Use the replicate function to simulate the montyhall game the number of times in reps
+                           {
+                             montyhall(switch)
+                           })
+  return(round(sum(sim_results)/reps, 3)) # Add all the TRUE values (1) from the simulate and divide by number of simulations
+}
+```
+
+```{r}
+set.seed(96) # Set the seed to ensure reproducibility
+
+noswitch <- sim_montyhall(1000, FALSE) # Simulation for not switching
+switch <- sim_montyhall(1000, TRUE) # Simulation for switching
+
+noswitch
+switch
+```
+
+# Results
+
+Using 1000 simulations, the number of successes for a person who switches doors is `r (100 * switch)`%
+
+Using 1000 simulations, the number of successes for a person who does not switch doors is `r (100 * noswitch)`%
+
