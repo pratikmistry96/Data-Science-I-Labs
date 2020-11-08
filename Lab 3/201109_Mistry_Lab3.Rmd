@@ -9,11 +9,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+**GitHub Link:** https://github.com/pratikmistry96/Data-Science-I-Labs/tree/master/Lab%203
+
 **Clear Workspace Variables**
 ```{r}
 rm(list = ls())
 ```
-
 
 
 # Introduction:
