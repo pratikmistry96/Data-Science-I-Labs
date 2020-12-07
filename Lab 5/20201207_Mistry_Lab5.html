@@ -14245,7 +14245,7 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Data-Science-I---Lab-5">Data Science I - Lab 5<a class="anchor-link" href="#Data-Science-I---Lab-5">&#182;</a></h1><p><strong>Author:</strong> Pratik Mistry</p>
 <p><strong>Date:</strong> 07 December 2020</p>
-<p><strong>GitHub Link:</strong> <a href="https://github.com/pratikmistry96/Data-Science-I-Labs/tree/master/Lab%204">https://github.com/pratikmistry96/Data-Science-I-Labs/tree/master/Lab%204</a></p>
+<p><strong>GitHub Link:</strong> <a href="https://github.com/pratikmistry96/Data-Science-I-Labs/tree/master/Lab%205">https://github.com/pratikmistry96/Data-Science-I-Labs/tree/master/Lab%205</a></p>
 
 </div>
 </div>
@@ -14257,17 +14257,17 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[251]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Libraries</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span><span class="p">,</span> <span class="n">AgglomerativeClustering</span>
-<span class="kn">import</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="k">as</span> <span class="nn">shc</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span> <span class="c1"># Load make_blobs functions</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span><span class="p">,</span> <span class="n">AgglomerativeClustering</span> <span class="c1"># Load the functions for clustering from sckit-learn</span>
+<span class="kn">import</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="k">as</span> <span class="nn">shc</span> <span class="c1"># Load the dendrogram plotting function</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span> <span class="c1"># Load the function to scale the data</span>
 </pre></div>
 
      </div>
@@ -14289,12 +14289,12 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[252]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Simulate dataset with 60 samples, 50 features, and 3 clusters</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">centers</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">96</span><span class="p">)</span>
-<span class="n">cluster_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">])</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">centers</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">96</span><span class="p">)</span> <span class="c1"># Use make blob to create the dataset</span>
+<span class="n">cluster_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">])</span> <span class="c1"># Create a data frame for cluster labels</span>
 </pre></div>
 
      </div>
@@ -14310,15 +14310,15 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[253]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 1b) Perform k-means using K = 3</span>
-<span class="n">kmeans_k_3</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span>
-<span class="n">kmeans_k_3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_k_3</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">kmeans_k_3</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="c1"># Create a k-means clustering using 3 clusters and random state of 8</span>
+<span class="n">kmeans_k_3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># Fit the algorithm to the simulated data</span>
+<span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_k_3</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># Predict the clusters and add to the data frame</span>
 
-<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=3&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=3&#39;</span><span class="p">])</span> <span class="c1"># Create a contingency table of the labels</span>
 </pre></div>
 
      </div>
@@ -14334,7 +14334,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[253]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 
 
 
@@ -14415,15 +14415,15 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[254]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 1b) Perform k-means using K = 3</span>
-<span class="n">kmeans_k_2</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">kmeans_k_2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_k_2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">kmeans_k_2</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="c1"># Create a k-means clustering using 2 clusters and random state of 8</span>
+<span class="n">kmeans_k_2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># Fit the algorithm to the data</span>
+<span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_k_2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># Predict the cluster id</span>
 
-<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=2&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=2&#39;</span><span class="p">])</span> <span class="c1"># Create a contingency table</span>
 </pre></div>
 
      </div>
@@ -14439,7 +14439,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[254]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 
 
 
@@ -14514,15 +14514,15 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[255]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 1d) Perform k-means using K = 4</span>
-<span class="n">kmeans_k_4</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">kmeans_k_4</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">kmeans_k_4</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="c1"># Create a k-means clustering using 4 clusters and random state of 8</span>
+<span class="n">kmeans_k_4</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># Fit the k-means algorithm</span>
 <span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_k_4</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=4&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;k=4&#39;</span><span class="p">])</span> <span class="c1"># Create a contigency table of ground truth and the predicted ids</span>
 </pre></div>
 
      </div>
@@ -14538,7 +14538,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[255]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 
 
 
@@ -14621,19 +14621,19 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[256]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">X_scale</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span> <span class="c1"># Create the a standard scaling function</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># Fit the standard scaler to data</span>
+<span class="n">X_scale</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># Transform the data and add to a new variable</span>
 
-<span class="n">kmeans_k_3_scale</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">kmeans_k_3_scale</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scale</span><span class="p">)</span>
+<span class="n">kmeans_k_3_scale</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="c1"># Create a k-means cluster algorithm with 3 clusters</span>
+<span class="n">kmeans_k_3_scale</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scale</span><span class="p">)</span> <span class="c1"># Fit algorithm to the scaled data</span>
 
-<span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;norm_k=3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_k_3_scale</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_scale</span><span class="p">)</span>
+<span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;norm_k=3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_k_3_scale</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_scale</span><span class="p">)</span> <span class="c1"># Predict the new clusters</span>
 
-<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;norm_k=3&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">],</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;norm_k=3&#39;</span><span class="p">])</span> <span class="c1"># Create a contingency table</span>
 </pre></div>
 
      </div>
@@ -14649,7 +14649,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[256]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 
 
 
@@ -14733,7 +14733,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[257]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load the dataset with no header</span>
@@ -14760,14 +14760,16 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[258]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">eluc_complete</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;complete&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create and plot a dendogram using complete linkage and euclidean metric</span>
+<span class="n">eluc_complete</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;complete&#39;</span><span class="p">))</span>
+<span class="c1"># Add plot labels in the following lines</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Euclidean Distance&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Complete | Metric = Euclidean&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># Show plot</span>
 </pre></div>
 
      </div>
@@ -14814,14 +14816,16 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[259]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">eluc_single</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create and plot a dendogram using single linkage and euclidean metric</span>
+<span class="n">eluc_single</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span><span class="p">))</span>
+<span class="c1"># Add plot labels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Euclidean Distance&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Single | Metric = Euclidean&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># Show plot</span>
 </pre></div>
 
      </div>
@@ -14868,10 +14872,12 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[260]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">eluc_average</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create and plot a dendogram using average linkage and euclidean metric</span>
+<span class="n">eluc_average</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span><span class="p">))</span>
+<span class="c1">## Add plot labels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Euclidean Distance&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Average | Metric = Euclidean&#39;</span><span class="p">)</span>
@@ -14922,14 +14928,16 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[261]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corr_complete</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;complete&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create and plot a dendogram using complete linkage and correlation metric</span>
+<span class="n">corr_complete</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;complete&#39;</span><span class="p">))</span>
+<span class="c1"># Add plot labels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Correlation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Complete | Metric = Correlation&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># Show the plot</span>
 </pre></div>
 
      </div>
@@ -14965,14 +14973,15 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[262]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corr_complete</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;complete&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Create another plot and zoom in on the y-axis to uncover clusters</span>
+<span class="n">corr_complete</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;complete&#39;</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Correlation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Complete | Metric = Correlation&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">1.2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">1.2</span><span class="p">])</span> <span class="c1"># Set yaxis limits</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -14995,7 +15004,7 @@ a.anchor-link {
 
 
 <div class="jp-RenderedImage jp-OutputArea-output ">
-<img src="data:image/png;base64,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
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -15020,13 +15029,16 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[263]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corr_single</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create and plot a dendogram using single linkage and correlation metric</span>
+<span class="n">corr_single</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span><span class="p">))</span>
+<span class="c1"># Add plot labels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Correlation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Single | Metric = Correlation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># Show plot</span>
 </pre></div>
 
      </div>
@@ -15042,7 +15054,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[263]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 
 
 
@@ -15076,15 +15088,17 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[264]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corr_single</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create the plot above again and zoom in on y-axis</span>
+<span class="n">corr_single</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span><span class="p">))</span>
+<span class="c1"># Add plot labels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Correlation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Single | Metric = Correlation&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">1.05</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">1.05</span><span class="p">])</span> <span class="c1"># Set y axis limits</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># SHow plot</span>
 </pre></div>
 
      </div>
@@ -15131,14 +15145,16 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[265]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corr_average</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create and plot a dendogram using average linkage and correlation metric</span>
+<span class="n">corr_average</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span><span class="p">))</span>
+<span class="c1"># Add plot labels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Correlation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Average | Metric = Correlation&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1">#SHow plot</span>
 </pre></div>
 
      </div>
@@ -15174,15 +15190,17 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[266]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corr_average</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create the plot above again and zoom in on yaxis </span>
+<span class="n">corr_average</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">gene_data</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span><span class="p">))</span>
+<span class="c1"># Add labels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Number&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Correlation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linkage = Average | Metric = Correlation&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">1.05</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">1.05</span><span class="p">])</span> <span class="c1"># Set y axis limits</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># Show plot</span>
 </pre></div>
 
      </div>
